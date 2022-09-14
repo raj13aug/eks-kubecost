@@ -1,3 +1,13 @@
+provider "kubernetes" {
+  config_path = "~/.kube/config"
+}
+
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
+}
+
 resource "kubernetes_namespace" "kubecost" {
   count = var.enable_kubecost ? 1 : 0
   metadata {
