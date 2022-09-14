@@ -19,7 +19,6 @@ resource "kubernetes_namespace" "kubecost" {
 }
 
 resource "helm_release" "kubecost" {
-  depends_on = [helm_release.istio_istiod]
   count      = var.enable_kubecost ? 1 : 0
   name       = "kubecost"
   version    = var.kubecost_helm_chart_version
@@ -33,5 +32,12 @@ resource "helm_release" "kubecost" {
   set {
     name  = "kubecostToken"
     value = var.kubecost_token
+  }
+}
+
+resource "null_resource" "port-forward" {
+  depends_on = [helm_release.kubecost]
+  provisioner "local-exec" {
+    command = "kubectl port-forward -n kubecost svc/kubecost-cost-analyzer 9090:9090"
   }
 }
