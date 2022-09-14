@@ -12,9 +12,6 @@ resource "kubernetes_namespace" "kubecost" {
   count = var.enable_kubecost ? 1 : 0
   metadata {
     name = var.kubecost_namespace
-    # labels = {
-    #   istio-injection = "enabled"
-    # }
   }
 }
 
