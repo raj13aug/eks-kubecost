@@ -69,8 +69,3 @@ module "eks" {
     "karpenter.sh/discovery" = var.cluster_name
   }
 }
-
-#module "eks_oidc" {
-#  depends_on = [module.eks]
-#  source     = "./eks_oidc"
-#}
