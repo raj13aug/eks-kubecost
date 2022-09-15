@@ -31,10 +31,3 @@ resource "helm_release" "kubecost" {
     value = var.kubecost_token
   }
 }
-
-resource "null_resource" "port-forward" {
-  depends_on = [helm_release.kubecost]
-  provisioner "local-exec" {
-    command = "kubectl port-forward -n kubecost svc/kubecost-cost-analyzer 9090:9090"
-  }
-}
